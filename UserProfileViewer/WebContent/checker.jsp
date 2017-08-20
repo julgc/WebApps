@@ -10,7 +10,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<p><s:property value="today" /></p>
+<p><s:property value="today" /><s:property value="test.test" /></p>
 <H1>The server is up and running</H1>
 </body>
 </html>

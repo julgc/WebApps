@@ -5,13 +5,22 @@
 
 <struts>
 	<constant name="struts.devMode" value="true" />
-	<constant name="struts.objectFactory" value="spring" />
-	<constant name="struts.objectFactory.autoWire" value="auto" />
 
 	<package name="default" namespace="/" extends="struts-default">
-		<action name="" class="com.checker.ApplicationCheckerAction">
-			<result name="success">checker.jsp</result>
+	
+		<action name="profiles" class="profileAction" method="getAllProfile">
+			<result name="success">profiles.jsp</result>
+			<result name="error">error.html</result>
+		</action>	
+		
+		<action name="profilesByName" class="profileAction" method="getAllProfileByName">
+			<result name="success">profiles.jsp</result>
+			<result name="error">error.html</result>
+		</action>		
+		
+		<action name="">
+			<result type="redirect">home.html</result>
 		</action>
-	</package>
 
+	</package>
 </struts>
