@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 public class Name {
 
 	private String first;
-	private String middle;
 	private String last;
+	private String middle;
 
 	public String getFirst() {
 		return this.first;
@@ -31,5 +31,10 @@ public class Name {
 
 	public void setMiddle(String middle) {
 		this.middle = middle;
+	}
+
+	@Override
+	public String toString() {
+		return first + " " + middle + ". " + last;
 	}
 }

@@ -2,23 +2,25 @@ package com.webapp.model;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserProfile {
 
-	private String id;
 	private boolean active;
-	private boolean blocked;
-	private String balance;
-	private String picture;
-	private int age;
-	private Name name;
-	private String email;
-	private String phone;
 	private String address;
-	private String profile;
+	private int age;
+	private String balance;
+	private boolean blocked;
 	private Date date_registered;
+	private String email;
+	private String id;
+	@Autowired
+	private Name name;
+	private String phone;
+	private String picture;
+	private String profile;
 
 	public boolean getActive() {
 		return this.active;

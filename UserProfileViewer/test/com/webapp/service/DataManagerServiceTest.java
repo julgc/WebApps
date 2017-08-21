@@ -1,7 +1,6 @@
 package com.webapp.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.io.IOException;
 
@@ -27,21 +26,13 @@ public class DataManagerServiceTest {
 	public void getAllProfileByNameTest() throws IOException {
 		setUserProfiles();
 
-		Name name = new Name();
-		name.setFirst("1st");
-		name.setMiddle("Mid");
-		name.setLast("Last");
-
+		String name = "middle";
 		assertEquals(1, svc.getAllProfileByName(name).size());
 
-		name.setFirst("1st");
-		name.setMiddle("");
-		name.setLast("Last");
+		name = "1st";
 		assertEquals(2, svc.getAllProfileByName(name).size());
 
-		name.setFirst(null);
-		name.setMiddle("");
-		name.setLast("Last");
+		name = "lasT";
 		assertEquals(3, svc.getAllProfileByName(name).size());
 	}
 
@@ -72,7 +63,7 @@ public class DataManagerServiceTest {
 
 		Name name2 = new Name();
 		name2.setFirst("1st");
-		name2.setMiddle(null);
+		name2.setMiddle("Middle");
 		name2.setLast("Last");
 		up2.setName(name2);
 
@@ -90,13 +81,13 @@ public class DataManagerServiceTest {
 		svc.setAllUserProfiles(null);
 		assertEquals(0, svc.getAllProfile().size());
 	}
-
-	@Test
-	public void testThatUrlIsLoadableIntoUserProfileObject() {
-		try {
-			svc.getAllUserProfilesFromUrl();
-		} catch (IOException e) {
-			fail();
-		}
-	}
+	// Should not test external dependency
+	// @Test
+	// public void testThatUrlIsLoadableIntoUserProfileObject() {
+	// try {
+	// svc.getAllUserProfilesFromUrl();
+	// } catch (IOException e) {
+	// fail();
+	// }
+	// }
 }

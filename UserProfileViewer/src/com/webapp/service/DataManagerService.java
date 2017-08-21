@@ -27,27 +27,33 @@ public class DataManagerService {
 		List<String[]> allProfile = new ArrayList<String[]>();
 		if (allUserProfiles != null)
 			for (UserProfile profile : allUserProfiles) {
-				allProfile.add(new String[] { profile.getId(), profile.getProfile() });
+				String[] profileSummary = constructProfileSummary(profile);
+				allProfile.add(profileSummary);
 			}
 		return allProfile;
 	}
 
+	private String[] constructProfileSummary(UserProfile profile) {
+		String[] profileSummary = new String[] { profile.getId(), profile.getName().toString(),
+				"" + profile.getAge(), profile.getActive() ? "checked" : "",
+				profile.getBlocked() ? "checked" : "", };
+		return profileSummary;
+	}
+
 	/** Returns the profile which satisfy the searchName criteria */
-	public List<String[]> getAllProfileByName(Name pName) throws IOException {
+	public List<String[]> getAllProfileByName(String pName) throws IOException {
 		List<String[]> allProfileByName = new ArrayList<String[]>();
-		if (allUserProfiles != null && pName != null)
+		if (allUserProfiles != null && !isStrEmpty(pName))
 			for (UserProfile profile : allUserProfiles) {
 				Name name = profile.getName();
-
-				String first = isStrEmpty(pName.getFirst()) ? name.getFirst() : pName.getFirst();
-				String middle = isStrEmpty(pName.getMiddle()) ? name.getMiddle() : pName.getMiddle();
-				String last = isStrEmpty(pName.getLast()) ? name.getLast() : pName.getLast();
-				String nameFromSearch = first + middle + last;
-				String fromData = name.getFirst() + name.getMiddle() + name.getLast();
-
-				if (nameFromSearch.equals(fromData))
-					allProfileByName.add(new String[] { profile.getId(), profile.getProfile() });
+				if (name.toString().toLowerCase().indexOf(pName.toLowerCase().trim()) != -1) {
+					String[] profileSummary = constructProfileSummary(profile);
+					allProfileByName.add(profileSummary);
+				}
 			}
+		else {
+			return getAllProfile();
+		}
 		return allProfileByName;
 	}
 
@@ -67,6 +73,8 @@ public class DataManagerService {
 		Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new DateAdapter()).create();
 		String JsonString = jsonSB.toString();
 		allUserProfiles = gson.fromJson(JsonString, UserProfile[].class);
+
+		allUserProfiles = gson.fromJson(JsonString, UserProfile[].class);
 	}
 
 	/**
@@ -76,7 +84,7 @@ public class DataManagerService {
 	 */
 	public UserProfile getSingleUserProfile(String id) throws IOException {
 		UserProfile singleUserProfile = new UserProfile();
-		if (allUserProfiles != null)
+		if (allUserProfiles != null && id != null)
 			for (UserProfile profile : allUserProfiles) {
 				if (id.equals(profile.getId())) {
 					singleUserProfile = profile;
