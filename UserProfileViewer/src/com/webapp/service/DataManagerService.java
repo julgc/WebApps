@@ -19,8 +19,14 @@ import com.webapp.model.UserProfile;
 @Service
 public class DataManagerService {
 
-	private static final String USER_PROFILE_URL = "http://s3-ap-southeast-1.amazonaws.com/fundo/js/profiles.json";
+	private static final String USER_PROFILE_URL = "https://raw.githubusercontent.com/julgc/WebApps/master/UserProfileViewer/profiles.json";
 	private UserProfile[] allUserProfiles;
+
+	private String[] constructProfileSummary(UserProfile profile) {
+		String[] profileSummary = new String[] { profile.getId(), profile.getName().toString(), "" + profile.getAge(),
+				profile.getActive() ? "checked" : "", profile.getBlocked() ? "checked" : "", };
+		return profileSummary;
+	}
 
 	/** Returns the profile strings as list */
 	public List<String[]> getAllProfile() throws IOException {
@@ -31,13 +37,6 @@ public class DataManagerService {
 				allProfile.add(profileSummary);
 			}
 		return allProfile;
-	}
-
-	private String[] constructProfileSummary(UserProfile profile) {
-		String[] profileSummary = new String[] { profile.getId(), profile.getName().toString(),
-				"" + profile.getAge(), profile.getActive() ? "checked" : "",
-				profile.getBlocked() ? "checked" : "", };
-		return profileSummary;
 	}
 
 	/** Returns the profile which satisfy the searchName criteria */
@@ -79,7 +78,7 @@ public class DataManagerService {
 
 	/**
 	 * Gets UserProfile By Id
-	 * 
+	 *
 	 * @throws IOException
 	 */
 	public UserProfile getSingleUserProfile(String id) throws IOException {
